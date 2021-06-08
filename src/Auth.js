@@ -1,3 +1,4 @@
+import axios from 'axios';
 import sigUtil from 'eth-sig-util';
 
 function Auth({ web3, account }) {
@@ -91,11 +92,24 @@ function Auth({ web3, account }) {
         if (result.error) return console.error('ERROR', result);
         console.log('TYPED SIGNED:' + JSON.stringify(result.result));
   
-        debugger;
-        const recovered = sigUtil.recoverTypedSignature_v4({
-          data: JSON.parse(msgParams),
-          sig: result.result,
-        });
+        axios.get(`https://auth-functions.netlify.app/.netlify/functions/auth?user=${result.result}`)
+            .then(function (response) {
+                // handle success
+                console.log(response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });
+
+        // debugger;
+        // const recovered = sigUtil.recoverTypedSignature_v4({
+        //   data: JSON.parse(msgParams),
+        //   sig: result.result,
+        // });
       }
     );
   }
