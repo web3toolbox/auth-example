@@ -41,7 +41,6 @@ function Auth({ web3, account, setSignature }) {
           alert(result.error.message);
         }
         if (result.error) return console.error('ERROR', result);
-        console.log('TYPED SIGNED:' + JSON.stringify(result.result));
         setSignature(signature)
       }
     );
