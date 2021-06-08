@@ -1,25 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
-import {
-  normalize as normalizeAddress,
-  signTypedData,
-  signTypedData_v4,
-  signTypedDataLegacy,
-} from 'eth-sig-util';
+
+import { useState, useEffect } from "react";
+import Web3 from "web3";
+import detectEthereumProvider from '@metamask/detect-provider';
+
+import Auth from "./Auth";
 
 function App() {
+  const [example, setExample] = useState();
 
-  const signMe = () => {
-    console.log(JSON.stringify(signTypedData_v4))
-  }
+  const load = async () => {
+    const provider = await detectEthereumProvider();
+    const web3 = new Web3(provider);
+
+    const accounts = await web3.eth.getAccounts();
+
+    setExample(<Auth web3={web3} account={accounts[0]} />)
+  } 
+
+  useEffect(() => {
+    load()
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          <button onClick={() => {signMe()}}>sign me</button>
-        </p>
+        { example ? example : <div>Loading...</div>}
       </header>
     </div>
   );
