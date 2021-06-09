@@ -1,4 +1,9 @@
 import { useState } from 'react';
+import {
+  Link
+} from "react-router-dom";
+
+
 const Navigation = () => {
     const [navIsActive, setNavIsActive] = useState(false);
   
@@ -16,18 +21,18 @@ const Navigation = () => {
       
         <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start">
-            <a class="navbar-item">
+            <Link class="navbar-item" to="/">
               Home
-            </a>
-            <a class="navbar-item">
+            </Link>
+            <Link class="navbar-item" to="/trends">
               Trends
-            </a>
-            <a class="navbar-item">
+            </Link>
+            <Link class="navbar-item" to="/charts">
               Charts
-            </a>
-            <a class="navbar-item">
+            </Link>
+            <Link class="navbar-item" to="/events">
               Events
-            </a>
+            </Link>
       
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">

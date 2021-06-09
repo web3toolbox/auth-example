@@ -23,7 +23,7 @@ function Auth({ web3, account, setSignature }) {
 
     const msgParams = JSON.stringify({
       domain: {
-        chainId: 1,
+        chainId: 1337,
         name: 'Leaping Lubins',
         // verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
         version: '1',

@@ -7,6 +7,11 @@ import Auth from "./Auth";
 
 import Navigation from './components/Navigation'
 import Content  from './components/Content';
+
+import {
+  Switch,
+  Route,
+} from "react-router-dom";
  
 function App() {
   const [accounts, setAccounts] = useState([])
@@ -34,19 +39,43 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-        <Navigation />
-
-        { 
-            isMetaMaskConnected ?
-              <Auth web3={web3} requestAccounts={requestAccounts} account={accounts[0]} setSignature={setSignature} /> 
-              : <button onClick={() => {requestAccounts()}}> Connect to MetaMask </button>
-        }
-
-        <Content signature={signature} />
-
-    </div>
-  );
-}
+    <Switch>
+      <Route path="/" exact>
+        <div className="App">
+          <Navigation />
+          { 
+              isMetaMaskConnected ?
+                <Auth web3={web3} requestAccounts={requestAccounts} account={accounts[0]} setSignature={setSignature} /> 
+                : <button onClick={() => {requestAccounts()}}> Connect to MetaMask </button>
+          }
+          <Content signature={signature} />
+          </div>
+      </Route>
+      <Route path="/trends">
+        <div className="App">
+          <Navigation />
+          trends
+        </div>
+      </Route>
+      <Route path="/charts">
+        <div className="App">
+          <Navigation />
+          charts
+        </div>
+      </Route>
+      <Route path="/events">
+        <div className="App">
+          <Navigation />
+          events
+        </div>
+      </Route>
+      <Route>
+        <div className="App">
+          doh
+        </div>
+      </Route>
+    </Switch>        
+      );
+    }
 
 export default App;
