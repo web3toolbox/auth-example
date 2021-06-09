@@ -4,11 +4,11 @@ import {
 
 const Navigation = ({ openLoginModal }) => {
     return (
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="https://bulma.io">
+    <nav className="navbar" role="navigation" aria-label="main navigation">
+        <div className="navbar-brand">
+          <a className="navbar-item" href="https://bulma.io">
           </a>
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -30,15 +30,15 @@ const Navigation = ({ openLoginModal }) => {
               Events
             </Link>
       
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">
+            <div className="navbar-item has-dropdown is-hoverable">
+              <a className="navbar-link">
                 More
               </a>
-              <div class="navbar-dropdown">
-                <a class="navbar-item">
+              <div className="navbar-dropdown">
+                <a className="navbar-item">
                   About
                 </a>
-                <a class="navbar-item">
+                <a className="navbar-item">
                   Contact
                 </a>
               </div>
