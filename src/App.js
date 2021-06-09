@@ -7,12 +7,18 @@ import Auth from "./Auth";
 
 import Navigation from './components/Navigation'
 import Content  from './components/Content';
+import { LoginModal } from './components/LoginModal'
  
 function App() {
   const [accounts, setAccounts] = useState([])
   const [web3, setWeb3] = useState();
   const [signature, setSignature] = useState('');
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   const isMetaMaskConnected = accounts && Boolean(accounts.length > 0);
+
+  const loginFlow = () => {
+    
+  }
 
   const requestAccounts = async () => {
     const newAccounts = await window.ethereum.request({
@@ -35,13 +41,13 @@ function App() {
 
   return (
     <div className="App">
-        <Navigation />
-
-        { 
+        <Navigation openLoginModal={setLoginModalOpen}/>
+        <LoginModal open={loginModalOpen} setLoginModalOpen={setLoginModalOpen} />
+        {/* { 
             isMetaMaskConnected ?
               <Auth web3={web3} requestAccounts={requestAccounts} account={accounts[0]} setSignature={setSignature} /> 
               : <button onClick={() => {requestAccounts()}}> Connect to MetaMask </button>
-        }
+        } */}
 
         <Content signature={signature} />
 

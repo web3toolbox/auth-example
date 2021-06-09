@@ -1,5 +1,5 @@
 import { useState } from 'react';
-const Navigation = () => {
+const Navigation = ({ openLoginModal }) => {
     const [navIsActive, setNavIsActive] = useState(false);
   
     return (
@@ -47,8 +47,8 @@ const Navigation = () => {
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button is-primary">
-                  <strong>Discover</strong>
+                <a onClick={() => openLoginModal(true)} class="button is-primary">
+                  <strong>Login</strong>
                 </a>
               </div>
             </div>

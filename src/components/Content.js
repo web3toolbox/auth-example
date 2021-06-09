@@ -45,7 +45,6 @@ const Content = ({ signature }) => {
             </div>
           </div>
         </section>
-
       </div>
     </div>
   </section>
