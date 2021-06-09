@@ -1,6 +1,5 @@
 import { useState } from 'react';
 const Navigation = ({ openLoginModal }) => {
-    const [navIsActive, setNavIsActive] = useState(false);
   
     return (
     <nav class="navbar" role="navigation" aria-label="main navigation">

@@ -1,51 +1,59 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import styled from 'styled-components';
+import Web3 from "web3";
+import detectEthereumProvider from '@metamask/detect-provider';
+import ConnectionWalkThroughModal from './components/ConnectionWalkThrough'
 
 const StyledButton = styled.button`
-  background-color: #DC832E;
-  border: solid 0.1rem #e0e0e0;
-  border-radius: 0.4rem;
-  padding: 0.4rem 1rem;
-  color: #fff;
-  font-weight: bold;
+  width: 225px;
+  img {
+    paddingRight: 3px;
+  }
 `;
+function MetaMaskAuth({ web3Provider, account, setSignature, authRequest, setLoginModalOpen }) {
+  const [accounts, setAccounts] = useState([])
+  const [web3, setWeb3] = useState();
+  const [walkThroughModalOpen, setWalkThroughModalOpen] = useState(false);
 
-function Auth({ web3, account, setSignature }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-    
-  const Login = () => {
-    
-    if (isAuthenticated) {
-        alert(`Show Modal`)
-        return;
-    }
+  const initialize = async () => {
+    const provider = await detectEthereumProvider();
+    const web3 = await new Web3(provider)
+    setWeb3(web3);
+    setAccounts(await web3.eth.getAccounts());
+  } 
 
-    const msgParams = JSON.stringify({
-      domain: {
-        chainId: 1,
-        name: 'Leaping Lubins',
-        // verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
-        version: '1',
-      },
-  
-      message: { contents: 'Login to Leaping Lubins'},
-      primaryType: 'Message',
-      types: {
-        EIP712Domain: [
-          { name: 'name', type: 'string' },
-          { name: 'version', type: 'string' },
-          { name: 'chainId', type: 'uint256' },
-          // { name: 'verifyingContract', type: 'address' },
-        ],
-        // // Refer to PrimaryType
-        Message: [
-          { name: 'contents', type: 'string' },
-        ],
-      },
-    });
+  useEffect(() => {
+    initialize()
+  }, []);
+
+  const metamaskLogo = 'metamask.svg'
+  const Connect = async () => {
+
+    setWalkThroughModalOpen(true)
+    requestAccounts()
+    .then((newAccounts) => {
+      if(newAccounts.length){
+        Login(newAccounts[0]);
+      }
+    })
+  }
+
+  const requestAccounts = async () => {
+    const newAccounts = await window.ethereum.request({
+      method: 'eth_requestAccounts',
+    })
+    setAccounts(newAccounts)
+    return Promise.resolve(newAccounts);
+  }
+
+  const closeModals = () => {
+    setWalkThroughModalOpen(false);
+    setLoginModalOpen(false)
+  }
+
+  const Login = (account) => {
     const from = account;
-    const params = [from, msgParams];
+    const params = [from, JSON.stringify(authRequest)];
     const method = 'eth_signTypedData_v4';
 
     web3.currentProvider.sendAsync(
@@ -59,17 +67,26 @@ function Auth({ web3, account, setSignature }) {
         if (err) return console.dir(err);
         if (result.error) {
           alert(result.error.message);
+          closeModals()
         }
         if (result.error) return console.error('ERROR', result);
         setSignature(signature);
-        setIsAuthenticated(true);
+        closeModals();
       }
     );
   }
 
   return (
-    <StyledButton onClick={() => {Login()}}>{ isAuthenticated ? `View Account` : `Login with Metamask` }</StyledButton>
+    // <StyledButton onClick={() => {Login()}}>{ isAuthenticated ? `View Account` : `Login with Metamask` }</StyledButton>
+    // NEED TO SETUP INSTALL METAMASK FLOW AS WELL
+    <> 
+    <ConnectionWalkThroughModal open={walkThroughModalOpen} setWalkThroughModalOpen={setWalkThroughModalOpen} connected={Boolean(accounts.length)} />
+    <StyledButton className="button" onClick={() => accounts.length ? Login(accounts[0]) : Connect()} >
+    <img src={metamaskLogo} width="20" height="20"/>
+    Login with Metamask
+    </StyledButton> 
+    </>
   );
 }
 
-export default Auth;
+export default MetaMaskAuth;

@@ -1,5 +1,6 @@
+import MetaMaskAuth from '../Auth';
 
-export const LoginModal = ({open, setLoginModalOpen}) => {
+export const LoginModal = ({open, setLoginModalOpen, setMMSignature}) => {
     const active = open ? "is-active" : "";
     const googleLogo = 'google.png'
     const facebookLogo = 'facebook.png'
@@ -10,6 +11,32 @@ export const LoginModal = ({open, setLoginModalOpen}) => {
     const buttonStyle = {
         width: '225px'
     }
+
+    const metamaskAuthRequest = {
+        domain: {
+          chainId: 1,
+          name: 'localhost2',
+          // verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+          version: '1',
+        },
+    
+        message: { contents: 'Login to Leaping Lubins'},
+        primaryType: 'Message',
+        types: {
+          EIP712Domain: [
+            { name: 'name', type: 'string' },
+            { name: 'version', type: 'string' },
+            { name: 'chainId', type: 'uint256' },
+            // { name: 'verifyingContract', type: 'address' },
+          ],
+          // // Refer to PrimaryType
+          Message: [
+            { name: 'contents', type: 'string' },
+          ],
+        },
+      }
+
+
     return (
         <div className={`modal ${active}`}>
           <div className="modal-background" />
@@ -32,10 +59,7 @@ export const LoginModal = ({open, setLoginModalOpen}) => {
                 <img src={facebookLogo} width="20" height="20" style={imgStyle}/>
                 Login with Facebook
                 </button> 
-                <button className="button" style={buttonStyle}>
-                <img src={metamaskLogo} width="20" height="20" style={imgStyle}/>
-                Login with Metamask
-                </button> 
+                <MetaMaskAuth authRequest={metamaskAuthRequest} setSignature={setMMSignature} setLoginModalOpen={setLoginModalOpen}/>
                 </div>
               
             </section>
