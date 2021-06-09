@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 // import { Modal, ModalCard, ModalCardBody } from 'react-bulma-components'
 import { useState, useEffect, useMemo } from "react";
@@ -36,17 +35,16 @@ function App() {
 
   return (
     <div className="App">
-        { signature ?
-        //  <div>Authed!</div> 
-        <>
         <Navigation />
-        <Content />
-        </>
-         : 
+
+        { 
             isMetaMaskConnected ?
               <Auth web3={web3} requestAccounts={requestAccounts} account={accounts[0]} setSignature={setSignature} /> 
               : <button onClick={() => {requestAccounts()}}> Connect to MetaMask </button>
         }
+
+        <Content signature={signature} />
+
     </div>
   );
 }

@@ -1,5 +1,25 @@
+import { useState } from "react";
+
+import styled from 'styled-components';
+
+const StyledButton = styled.button`
+  background-color: #DC832E;
+  border: solid 0.1rem #e0e0e0;
+  border-radius: 0.4rem;
+  padding: 0.4rem 1rem;
+  color: #fff;
+  font-weight: bold;
+`;
+
 function Auth({ web3, account, setSignature }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+    
   const Login = () => {
+    
+    if (isAuthenticated) {
+        alert(`Show Modal`)
+        return;
+    }
 
     const msgParams = JSON.stringify({
       domain: {
@@ -41,13 +61,14 @@ function Auth({ web3, account, setSignature }) {
           alert(result.error.message);
         }
         if (result.error) return console.error('ERROR', result);
-        setSignature(signature)
+        setSignature(signature);
+        setIsAuthenticated(true);
       }
     );
   }
 
   return (
-    <button onClick={() => {Login()}}>Login</button>
+    <StyledButton onClick={() => {Login()}}>{ isAuthenticated ? `View Account` : `Login with Metamask` }</StyledButton>
   );
 }
 
