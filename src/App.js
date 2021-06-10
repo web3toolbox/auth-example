@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from "react";
 import Navigation from './components/Navigation'
 import Content  from './components/Content';
+import Trends  from './content/Trends';
 import { LoginModal } from './components/LoginModal'
 import {
   Switch,
@@ -23,7 +24,7 @@ function App() {
       <Route path="/trends">
         <div className="App">
           <Navigation />
-          trends
+          <Trends />
         </div>
       </Route>
       <Route path="/charts">

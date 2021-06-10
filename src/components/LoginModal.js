@@ -34,7 +34,7 @@ export const LoginModal = ({open, setLoginModalOpen, setMMSignature}) => {
 
     const metamaskAuthRequest = {
         domain: {
-          chainId: 1,
+          chainId: 1337,
           name: 'localhost2',
           // verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
           version: '1',

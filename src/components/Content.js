@@ -13,18 +13,20 @@ const Content = ({ signature }) => {
   const [welcomeModal, setWelcomeModal] = useState(false);
   const [currentAuthStatus, setCurrentAuthStatus] = useState("none")
 
-  useEffect(() => {
+  useEffect(async () => {
     if (signature) {
-      axios.get(`https://auth-functions.netlify.app/.netlify/functions/auth?user=${signature}`)
-      .then(function (response) {
-        setPaywalledContent('moaaaaar');
-        setCurrentAuthStatus("subscribed")
-      })
-      .catch(function (error) {
-        console.log(error);
-        // TODO establish what the expected response should be if the user is not subscribed
-        setCurrentAuthStatus("free")
-      })
+
+      try {
+        const response = await axios.post('https://web3.bluer.workers.dev/api/trends', {
+          account: "temp",
+          signature: "temp"
+        })
+
+        setPaywalledContent(response.data.content);
+        setCurrentAuthStatus("subscribed");
+      } catch (err) {
+        setCurrentAuthStatus("free");
+      }
     }
   }, [signature])
 
@@ -76,7 +78,6 @@ const Content = ({ signature }) => {
     }
   }
 
-  const lorem = `Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.`
   return (
     <>
     {/* <SubscriptionModal subscribe={subscribe} subscribeModal={subscribeModal} toggleSubscribeModal={toggleSubscribeModal} /> */}
@@ -100,7 +101,6 @@ const Content = ({ signature }) => {
               <div className="content is-medium">
                 <h2 className="subtitle is-4">June 8, 2021</h2>
                 <h1 className="title">Lorem Ipsum</h1>
-                <p>{lorem}</p>
                 <p>{paywalledContent}</p>
               </div>
             </div>
