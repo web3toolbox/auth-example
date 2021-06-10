@@ -11,19 +11,13 @@ import {
 function App() {
   const [mmSignature, setMMSignature] = useState('');
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-
   return (
     <Switch>
       <Route path="/" exact>
         <div className="App">
-          <Navigation openLoginModal={setLoginModalOpen}/>
+          <Navigation openLoginModal={setLoginModalOpen} mmSignature={mmSignature} />
           <LoginModal open={loginModalOpen} setLoginModalOpen={setLoginModalOpen} setMMSignature={setMMSignature}/>
-        {/* { 
-            isMetaMaskConnected ?
-              <Auth web3={web3} requestAccounts={requestAccounts} account={accounts[0]} setSignature={setSignature} /> 
-              : <button onClick={() => {requestAccounts()}}> Connect to MetaMask </button>
-        } */}
-        <Content signature={mmSignature} />
+          <Content signature={mmSignature} />
           </div>
       </Route>
       <Route path="/trends">

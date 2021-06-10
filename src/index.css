@@ -1,17 +1,35 @@
+@import url(//db.onlinewebfonts.com/c/721c73bcd2e49f3a621991089838b503?family=Euclid+Circular+B+Medium);
+
+@font-face {
+  font-family: "Euclid Circular B Medium";
+  src: url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.eot");
+  src: url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/721c73bcd2e49f3a621991089838b503.svg#Euclid Circular B Medium")
+      format("svg");
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: "Euclid Circular B Medium", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 .current-stage {
   background-color: yellow;
 }
+
