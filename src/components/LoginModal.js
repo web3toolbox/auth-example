@@ -1,16 +1,36 @@
-import MetaMaskAuth from '../Auth';
+import MetaMaskAuth from './MetaMaskAuth';
+// import { MetaMaskAuth } from 'web3-toolkit'
+import styled from 'styled-components';
 
 export const LoginModal = ({open, setLoginModalOpen, setMMSignature}) => {
     const active = open ? "is-active" : "";
     const googleLogo = 'google.png'
     const facebookLogo = 'facebook.png'
     const metamaskLogo = 'metamask.svg'
-    const imgStyle = {
-        paddingRight: '3px'
-    }
-    const buttonStyle = {
-        width: '225px'
-    }
+
+    const StyledModalCard = styled.div`
+        width: 450px;
+    `
+    const StyledButton = styled.button`
+        border-radius: 30px;
+        font-size: 20px;
+        width: 320px; 
+        height: 60px;
+        display: flex;
+        justify-content: flex-start;
+        img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px
+        }
+    `
+    const StyledSection = styled.section`
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 370px;
+        align-items: center;
+    `
 
     const metamaskAuthRequest = {
         domain: {
@@ -29,7 +49,6 @@ export const LoginModal = ({open, setLoginModalOpen, setMMSignature}) => {
             { name: 'chainId', type: 'uint256' },
             // { name: 'verifyingContract', type: 'address' },
           ],
-          // // Refer to PrimaryType
           Message: [
             { name: 'contents', type: 'string' },
           ],
@@ -40,32 +59,29 @@ export const LoginModal = ({open, setLoginModalOpen, setMMSignature}) => {
     return (
         <div className={`modal ${active}`}>
           <div className="modal-background" />
-          <div className="modal-card">
+          <StyledModalCard className="modal-card">
             <header className="modal-card-head">
               <p className="modal-card-title">Login</p>
               <button
                 onClick={() => setLoginModalOpen(false)}
-                className="delete"å
+                className="delete"
                 aria-label="close"
               />
             </header>
-            <section className="modal-card-body">
-                <div className="buttons">
-               <button className="button" style={buttonStyle}>
-                <img src={googleLogo} width="20" height="20" style={imgStyle}/>
+            <StyledSection className="modal-card-body">
+               <StyledButton className="button">
+                <img src={googleLogo} />
                 Login with Google
-                </button> 
-                <button className="button" style={buttonStyle}>
-                <img src={facebookLogo} width="20" height="20" style={imgStyle}/>
+                </StyledButton> 
+                <StyledButton className="button">
+                <img src={facebookLogo}/>
                 Login with Facebook
-                </button> 
+                </StyledButton> 
                 <MetaMaskAuth authRequest={metamaskAuthRequest} setSignature={setMMSignature} setLoginModalOpen={setLoginModalOpen}/>
-                </div>
-              
-            </section>
+            </StyledSection>
             <footer className="modal-card-foot">
             </footer>
-          </div>
+          </StyledModalCard>
         </div>  
     )
 }
