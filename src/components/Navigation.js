@@ -51,8 +51,8 @@ const Navigation = ({ openLoginModal, mmSignature }) => {
           <Link class="navbar-item" to="/charts">
             Charts
           </Link>
-          <Link class="navbar-item" to="/events">
-            Events
+          <Link class="navbar-item" to="/comments">
+            Comments
           </Link>
 
           <div className="navbar-item has-dropdown is-hoverable">

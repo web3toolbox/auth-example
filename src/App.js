@@ -3,6 +3,7 @@ import { useState } from "react";
 import Navigation from './components/Navigation'
 import Content  from './components/Content';
 import { LoginModal } from './components/LoginModal'
+import { CommentSection } from './components/CommentSection'
 import {
   Switch,
   Route,
@@ -32,10 +33,11 @@ function App() {
           charts
         </div>
       </Route>
-      <Route path="/events">
+      <Route path="/comments">
         <div className="App">
           <Navigation />
-          events
+          comments
+          <CommentSection />
         </div>
       </Route>
       <Route>
