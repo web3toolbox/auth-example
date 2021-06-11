@@ -22,7 +22,7 @@ export const Comment = ({ comment, author, date }) => {
           </div>
         </div>
         <div class="content">
-         <i>{comment}</i>
+         <i><a href={`ipfs://${comment}`} target="_blank">{comment}</a></i>
           <br />
           <time datetime="2016-1-1">{date}</time>
         </div>

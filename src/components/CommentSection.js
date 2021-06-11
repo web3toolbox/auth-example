@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import axios from 'axios';
 import { Comment } from './Comment'
 import styled from 'styled-components'
 import Web3 from "web3";
@@ -39,12 +40,29 @@ const IPFS = require('ipfs-mini');
 const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
 const ipfsClient = require("ipfs-http-client");
 
-export const CommentSection = ({comments = [{comment: "Hey I think this is so cool", author: "0x2f318C334780961FB129D2a6c30D0763d9a5C970", date:"02/02/21 9:00PM CST"}]}) => {
+export const CommentSection = () => {
     const [accounts, setAccounts] = useState([]);
     const [web3, setWeb3] = useState();
     const [provider, setProvider] = useState();
     const [signedMessage, setSignedMessage] = useState('');
     const [inputValue, setInputValue] = useState('');
+    const [comments, setComments] = useState();
+
+    const loadComments = async () => {
+
+      const response = await axios.get('https://web3.bluer.workers.dev/api/comments');
+      const parsed = JSON.parse(response.data.comments)
+      // response.data.comments)
+      const commentsList = parsed.map((item, index) => {
+        return (<Comment key={index} comment={item} 
+          author="0x2f318C334780961FB129D2a6c30D0763d9a5C970" 
+          date="02/02/21 9:00PM CST" 
+          />)
+      })
+
+      setComments(commentsList)
+
+    };
 
     const initialize = async () => {
         const newProvider = await detectEthereumProvider();
@@ -58,6 +76,7 @@ export const CommentSection = ({comments = [{comment: "Hey I think this is so co
     
       useEffect(() => {
         initialize();
+        loadComments();
       }, []);
     
     const composeEIP712CompliantMessage = () => {
@@ -88,7 +107,11 @@ export const CommentSection = ({comments = [{comment: "Hey I think this is so co
     const persistToIpfs = async (message) => {
       const comment = `{ "message": "${message}" }`
       const cid = await ipfs.add(comment);
-      alert(cid)
+      const result = await axios.post('https://web3.bluer.workers.dev/api/comment/add', {
+          cid
+        })
+      loadComments();
+      return cid;
     }
 
     const SignMessage = (account) => {
@@ -110,7 +133,7 @@ export const CommentSection = ({comments = [{comment: "Hey I think this is so co
             }
             if (result.error) return console.error("ERROR", result);
             setSignedMessage(signature);
-            persistToIpfs(signature);
+            const cid = persistToIpfs(signature);
           }
         );
       };
@@ -120,13 +143,7 @@ export const CommentSection = ({comments = [{comment: "Hey I think this is so co
         <>
         <StyledSection>
         <StyledCommentsSection>
-
-        {
-            comments.map(item => {
-                const { comment, author, date } = item;
-                return <Comment comment={comment} author={author} date={date} />
-            }) 
-        }
+          { comments ? comments : (<div>Loading...</div>) }
         </StyledCommentsSection>
         <StyledSubSection>
        <StyledInput className="input is-primary" type="text" placeholder="your comment..." onChange={e => {setInputValue(e.target.value)}}/>
