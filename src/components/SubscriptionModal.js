@@ -5,7 +5,7 @@ import axios from 'axios';
 import Web3 from "web3";
 import detectEthereumProvider from '@metamask/detect-provider';
 
-export const SubscriptionModal = ({open, setSubcriptionModalOpen}) => {
+export const SubscriptionModal = ({open, setSubscriptionModalOpen}) => {
     const active = open ? "is-active" : "";
 
     const subscriptionModel = {
@@ -37,7 +37,7 @@ export const SubscriptionModal = ({open, setSubcriptionModalOpen}) => {
                   const test = test;
             }
             
-            setSubcriptionModalOpen(false);
+            setSubscriptionModalOpen(false);
     
         } catch (err) {
             alert("doh", err);
@@ -51,7 +51,7 @@ export const SubscriptionModal = ({open, setSubcriptionModalOpen}) => {
                 <div className="modal-content">
                 <header className="modal-card-head">
                 <p className="modal-card-title">Subscribe to Decentral Times</p>
-                <button className="delete" aria-label="close" onClick={()=>setSubcriptionModalOpen(false)}></button>
+                <button className="delete" aria-label="close" onClick={()=>setSubscriptionModalOpen(false)}></button>
                 </header>
                 <section className="modal-card-body">
                     <section className="section pt-1 pb-1">

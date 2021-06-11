@@ -13,16 +13,16 @@ import {
  
 function App() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const [subcriptionModalOpen, setSubcriptionModalOpen] = useState(false);
+  const [subcriptionModalOpen, setSubscriptionModalOpen] = useState(false);
   const [subscriptionExpiration, setSubscriptionExpiration] = useState(null);
   const header = (<>
     <Navigation 
         openLoginModal={setLoginModalOpen} 
-        openSubscriptionModal={setSubcriptionModalOpen} 
+        openSubscriptionModal={setSubscriptionModalOpen} 
         subscriptionExpiration={subscriptionExpiration} 
       />
-      <SubscriptionModal open={subcriptionModalOpen} setSubcriptionModalOpen={setSubcriptionModalOpen} />
-      <LoginModal open={loginModalOpen} setLoginModalOpen={setLoginModalOpen} setSubscriptionExpiration={setSubscriptionExpiration}/>
+      <SubscriptionModal open={subcriptionModalOpen} setSubscriptionModalOpen={setSubscriptionModalOpen} />
+      <LoginModal open={loginModalOpen} setLoginModalOpen={setLoginModalOpen} setSubscriptionExpiration={setSubscriptionExpiration} setLoginModalOpen={setLoginModalOpen} loginModalOpen={loginModalOpen}/>
     </>);
 
   return (
@@ -30,7 +30,7 @@ function App() {
       <Route path="/" exact>
         <div className="App">
           {header}
-          <Content subscriptionExpiration={subscriptionExpiration} />
+          <Content subscriptionExpiration={subscriptionExpiration} setSubscriptionExpiration={setSubscriptionExpiration} setLoginModalOpen={setLoginModalOpen}/>
         </div>
       </Route>
       <Route path="/trends">

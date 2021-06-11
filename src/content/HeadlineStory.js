@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { LoginModal } from '../components/LoginModal'
 
 const StyledSection = styled.section`
   display: flex;
@@ -79,8 +80,10 @@ const StyledButton = styled.button`
   padding: 20px;
 `;
 
-export const HeadlineStory = ({ subscriptionExpiration }) => {
+export const HeadlineStory = ({ subscriptionExpiration, loginModalOpen, setLoginModalOpen, setSubscriptionExpiration }) => {
   return (
+  <>
+  <LoginModal open={loginModalOpen} setLoginModalOpen={setLoginModalOpen} setSubscriptionExpiration={setSubscriptionExpiration} />
     <StyledSection>
       <StyledImg src="https://cms.accuweather.com/wp-content/uploads/2016/05/cropped-AP_19339813160350.jpg" />
       <StyledSubSection>
@@ -109,7 +112,7 @@ export const HeadlineStory = ({ subscriptionExpiration }) => {
           }}
         >
           {!subscriptionExpiration && (
-            <StyledButton className="button">
+            <StyledButton className="button" onClick={() => {setLoginModalOpen(true)}}>
               LOG IN TO READ ARTICLE
             </StyledButton>
           )}
@@ -119,5 +122,6 @@ export const HeadlineStory = ({ subscriptionExpiration }) => {
         </div>
       </StyledSubSection>
     </StyledSection>
+    </>
   );
 };
