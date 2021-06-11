@@ -34,6 +34,11 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 `
+
+const IPFS = require('ipfs-mini');
+const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+const ipfsClient = require("ipfs-http-client");
+
 export const CommentSection = ({comments = [{comment: "Hey I think this is so cool", author: "0x2f318C334780961FB129D2a6c30D0763d9a5C970", date:"02/02/21 9:00PM CST"}]}) => {
     const [accounts, setAccounts] = useState([]);
     const [web3, setWeb3] = useState();
@@ -80,6 +85,11 @@ export const CommentSection = ({comments = [{comment: "Hey I think this is so co
           }
     }
 
+    const persistToIpfs = async (message) => {
+      const comment = `{ "message": "${message}" }`
+      const cid = await ipfs.add(comment);
+      alert(cid)
+    }
 
     const SignMessage = (account) => {
         const from = account;
@@ -100,6 +110,7 @@ export const CommentSection = ({comments = [{comment: "Hey I think this is so co
             }
             if (result.error) return console.error("ERROR", result);
             setSignedMessage(signature);
+            persistToIpfs(signature);
           }
         );
       };
