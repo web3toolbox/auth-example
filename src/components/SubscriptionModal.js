@@ -50,7 +50,7 @@ export const SubscriptionModal = ({open, setSubcriptionModalOpen}) => {
             <div className="modal-background"></div>
                 <div className="modal-content">
                 <header className="modal-card-head">
-                <p className="modal-card-title">Subscribe to Leaping Lubins</p>
+                <p className="modal-card-title">Subscribe to Decentral Times</p>
                 <button className="delete" aria-label="close" onClick={()=>setSubcriptionModalOpen(false)}></button>
                 </header>
                 <section className="modal-card-body">

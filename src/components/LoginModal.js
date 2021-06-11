@@ -40,7 +40,7 @@ export const LoginModal = ({open, setLoginModalOpen, setSubscriptionExpiration})
           version: '1',
         },
     
-        message: { contents: 'Login to Leaping Lubins'},
+        message: { contents: 'Login to Decentral Times'},
         primaryType: 'Message',
         types: {
           EIP712Domain: [

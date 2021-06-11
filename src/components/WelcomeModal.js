@@ -4,7 +4,7 @@ const WelcomeModal = ({welcomeModal, toggleWelcomeModal}) =>{
             <div className="modal-background"></div>
                 <div className="modal-content">
                 <header className="modal-card-head">
-                <p className="modal-card-title">Welcome to Leaping Lubins, friend!</p>
+                <p className="modal-card-title">Welcome to Decentral Times, friend!</p>
                 <button className="delete" aria-label="close" onClick={()=>toggleWelcomeModal()}></button>
                 </header>
                 <section className="modal-card-body">
