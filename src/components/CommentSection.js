@@ -58,7 +58,7 @@ export const CommentSection = ({comments = [{comment: "Hey I think this is so co
     const composeEIP712CompliantMessage = () => {
         return {
             domain: {
-              chainId: 1,
+              chainId: 1337,
               name: 'localhost',
               // verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
               version: '1',

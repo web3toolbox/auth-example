@@ -1,10 +1,11 @@
 import './App.css';
 import { useState } from "react";
 import Navigation from './components/Navigation'
-import Content  from './components/Content';
-import Trends  from './content/Trends';
-import { LoginModal } from './components/LoginModal'
-import { CommentSection } from './components/CommentSection'
+import Content from './content/Content';
+import Trends from './content/Trends';
+import { LoginModal } from './components/LoginModal';
+import { SubscriptionModal } from './components/SubscriptionModal';
+import { CommentSection } from './components/CommentSection';
 import {
   Switch,
   Route,
@@ -13,30 +14,41 @@ import {
 function App() {
   const [mmSignature, setMMSignature] = useState('');
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [subcriptionModalOpen, setSubcriptionModalOpen] = useState(false);
+
+  const header = (<>
+    <Navigation 
+        openLoginModal={setLoginModalOpen} 
+        openSubscriptionModal={setSubcriptionModalOpen} 
+        mmSignature={mmSignature} 
+      />
+      <SubscriptionModal open={subcriptionModalOpen} setSubcriptionModalOpen={setSubcriptionModalOpen} />
+      <LoginModal open={loginModalOpen} setLoginModalOpen={setLoginModalOpen} setMMSignature={setMMSignature}/>
+    </>);
+
   return (
     <Switch>
       <Route path="/" exact>
         <div className="App">
-          <Navigation openLoginModal={setLoginModalOpen} mmSignature={mmSignature} />
-          <LoginModal open={loginModalOpen} setLoginModalOpen={setLoginModalOpen} setMMSignature={setMMSignature}/>
+          {header}
           <Content signature={mmSignature} />
-          </div>
+        </div>
       </Route>
       <Route path="/trends">
         <div className="App">
-          <Navigation />
+          {header}
           <Trends />
         </div>
       </Route>
       <Route path="/charts">
         <div className="App">
-          <Navigation />
+          {header}
           charts
         </div>
       </Route>
       <Route path="/comments">
         <div className="App">
-          <Navigation />
+          {header}
           comments
           <CommentSection />
         </div>

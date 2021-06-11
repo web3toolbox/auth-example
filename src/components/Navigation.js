@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Navigation = ({ openLoginModal, mmSignature }) => {
+const Navigation = ({ openLoginModal, openSubscriptionModal, mmSignature }) => {
   const [navBurgerActive, toggleNavburgerActive] = useState(false);
 
   return (
@@ -22,13 +22,13 @@ const Navigation = ({ openLoginModal, mmSignature }) => {
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
-        <div
+        {/* <div
           class={`navbar-menu ${navBurgerActive ? "is-active" : ""}`}
           id="navMenu"
         >
           <div class="navbar-start">
               { mmSignature ? 
-              <a class="navbar-item">
+              <a class="navbar-item" onClick={() => {openSubscriptionModal(true)}}>
                 My Account
               </a> : 
               <a class="navbar-item" onClick={() => {openLoginModal(true)}}>
@@ -37,7 +37,7 @@ const Navigation = ({ openLoginModal, mmSignature }) => {
              }
             </div>
             <div class="navbar-end"></div>
-        </div>
+        </div> */}
       </div>
 
       <div id="navbarBasicExample" class="navbar-menu">
@@ -68,7 +68,7 @@ const Navigation = ({ openLoginModal, mmSignature }) => {
           <div class="navbar-item">
             <div class="buttons">
               {mmSignature ? (
-                <a onClick={() => {}} class="button is-primary">
+                <a onClick={() => openSubscriptionModal(true)} class="button is-primary">
                   <strong>View Account</strong>
                 </a>
               ) : (
