@@ -1,30 +1,55 @@
-export const Comment = ({ comment, author, date }) => {
+import { useState, useEffect } from "react";
+import { 
+  Shield 
+} from 'react-ionicons';
+import { recoverTypedSignature_v4 } from "eth-sig-util"
+import * as ethUtil from 'ethereumjs-util';
+
+export const Comment = ({ comment, author, date, origin, cid }) => {
+  const [status, setStatus] = useState('grey');
+
+  useEffect(() => {
+    try {
+      const recovered = recoverTypedSignature_v4({
+        data: origin,
+        sig: comment,
+      });
+ 
+      if (ethUtil.toChecksumAddress(recovered) === ethUtil.toChecksumAddress(author)) {
+        setStatus('orange')
+      } else {
+        setStatus('red')
+      }
+
+
+    } catch (err) {
+      alert(`Unable to verify: ${err}`) 
+    }
+  }, [])
+
   return (
-    <div class="card">
-      {/* <div class="card-image">
-          <figure class="image is-4by3">
-            <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-          </figure>
-        </div> */}
-      <div class="card-content">
-        <div class="media">
-          <div class="media-left">
-            <figure class="image is-48x48">
-              <img
-                src="https://bulma.io/images/placeholders/96x96.png"
-                alt="Placeholder image"
-              />
+    <div className="card">
+      <div className="card-content">
+        <div className="media pb-1 mb-2">
+          <div className="media-left">
+            <figure className="image is-48x48">
+              <Shield 
+                color={status}
+                height="2rem"
+                width="2rem" />
             </figure>
           </div>
-          <div class="media-content">
-            <p class="title is-4">John Smith</p>
-            <p class="subtitle is-6" style={{textOverflow:'ellipsis'}}>{author}</p>
+          <div className="media-content pb-1 mb-1">
+            <p className="title is-4 pb-1 mb-1">
+              <a href={`ipfs://${cid}`} target="_blank">
+                {author ? author.substring(0,14) + "..." : "..."}
+              </a>
+            </p>
           </div>
         </div>
-        <div class="content">
-         <i>{comment}</i>
-          <br />
-          <time datetime="2016-1-1">{date}</time>
+        <div className="content">
+          <div className="pb-3">"{origin.message.comment}"</div>
+          <time>{date}</time>
         </div>
       </div>
     </div>
