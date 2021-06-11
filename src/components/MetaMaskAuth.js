@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import Web3 from "web3";
 import detectEthereumProvider from "@metamask/detect-provider";
@@ -97,6 +98,16 @@ function MetaMaskAuth({
         }
         if (result.error) return console.error("ERROR", result);
         setSignature(signature);
+
+        axios.post('https://web3.bluer.workers.dev/auth/register', {
+            account,
+            signature
+          }).then((res) => {
+          console.log("res", JSON.stringify(res))
+        }).catch((err) => {
+          console.log("error",  JSON.stringify(err))
+        });
+
         closeModals();
       }
     );
