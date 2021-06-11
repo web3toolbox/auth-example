@@ -18,6 +18,7 @@ const Navigation = ({
           <a
             onClick={() => openSubscriptionModal(true)}
             class="button is-primary"
+            style={{backgroundColor: '#037DD6', color:'white'}}
           >
             <strong>Subscribed until {expiresOn}</strong>
           </a>
@@ -27,6 +28,7 @@ const Navigation = ({
           <a
             onClick={() => openSubscriptionModal(true)}
             class="button is-primary"
+            style={{backgroundColor: '#037DD6', color:'white'}}
           >
             <strong>View Account</strong>
           </a>
@@ -34,7 +36,7 @@ const Navigation = ({
       }
     } else {
       return (
-        <a onClick={() => openLoginModal(true)} class="button is-primary">
+        <a onClick={() => openLoginModal(true)} class="button is-primary" style={{backgroundColor: '#037DD6', color:'white'}}>
           <strong>Login</strong>
         </a>
       );
