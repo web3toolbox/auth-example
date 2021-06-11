@@ -1,13 +1,17 @@
 import { 
     NewspaperOutline 
 } from 'react-ionicons';
-
+import axios from 'axios';
 import Web3 from "web3";
 import detectEthereumProvider from '@metamask/detect-provider';
 
 export const SubscriptionModal = ({open, setSubcriptionModalOpen}) => {
     const active = open ? "is-active" : "";
 
+    const subscriptionModel = {
+        "0.1":  2592000000, // number of seconds in 30 days
+        "1": 31536000000 // number of seconds in a year
+    }
     const subscribe = async (amount)  => {
         try {
             const provider = await detectEthereumProvider();
@@ -18,7 +22,22 @@ export const SubscriptionModal = ({open, setSubcriptionModalOpen}) => {
                 to: "0x15eA52861Bc87bEAfc7684a0B76BCEa55CB973Fd", 
                 value: web3.utils.toWei(amount, "ether")
             });
-    
+            const test = subscriptionModel[amount];
+            const dtest = Date.now();
+            const expirationDate = Date.now() + subscriptionModel[amount];
+
+            // TODO WHAT IS RESULT
+            if (result.transactionHash){
+                const subscriptionResult = await axios.post(
+                    "https://web3.bluer.workers.dev/auth/subscribe",
+                    {
+                      account: accounts[0],
+                      expiration: expirationDate
+                    }
+                  );
+                  const test = test;
+            }
+            
             setSubcriptionModalOpen(false);
             // setWelcomeModal(true);
     

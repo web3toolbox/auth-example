@@ -1,8 +1,34 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Navigation = ({ openLoginModal, openSubscriptionModal, mmSignature }) => {
+const Navigation = ({ openLoginModal, openSubscriptionModal, subscriptionExpiration }) => {
   const [navBurgerActive, toggleNavburgerActive] = useState(false);
+  const expiresOn = new Date(subscriptionExpiration && Number(subscriptionExpiration)).toDateString();
+  const renderLoginButton = () => {
+    if(subscriptionExpiration) {
+      if(subscriptionExpiration > 1) {
+        return (
+        <a onClick={() => openSubscriptionModal(true)} class="button is-primary">
+        <strong>Subscribed until {expiresOn}</strong>
+        </a>
+        )
+      } else {
+        return (
+          <a onClick={() => openSubscriptionModal(true)} class="button is-primary">
+          <strong>View Account</strong>
+        </a>
+          )
+        }
+     } else { 
+       return (
+        <a
+          onClick={() => openLoginModal(true)}
+          class="button is-primary"
+        >
+          <strong>Login</strong>
+        </a>
+      )}
+  }
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -27,7 +53,7 @@ const Navigation = ({ openLoginModal, openSubscriptionModal, mmSignature }) => {
           id="navMenu"
         >
           <div class="navbar-start">
-              { mmSignature ? 
+              { subscriptionExpiration ? 
               <a class="navbar-item" onClick={() => {openSubscriptionModal(true)}}>
                 My Account
               </a> : 
@@ -67,18 +93,7 @@ const Navigation = ({ openLoginModal, openSubscriptionModal, mmSignature }) => {
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              {mmSignature ? (
-                <a onClick={() => openSubscriptionModal(true)} class="button is-primary">
-                  <strong>View Account</strong>
-                </a>
-              ) : (
-                <a
-                  onClick={() => openLoginModal(true)}
-                  class="button is-primary"
-                >
-                  <strong>Login</strong>
-                </a>
-              )}
+            {renderLoginButton()}
             </div>
           </div>
         </div>

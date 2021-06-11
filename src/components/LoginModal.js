@@ -2,7 +2,7 @@ import MetaMaskAuth from './MetaMaskAuth';
 // import { MetaMaskAuth } from 'web3-toolkit'
 import styled from 'styled-components';
 
-export const LoginModal = ({open, setLoginModalOpen, setMMSignature}) => {
+export const LoginModal = ({open, setLoginModalOpen, setSubscriptionExpiration}) => {
     const active = open ? "is-active" : "";
     const googleLogo = 'google.png'
     const facebookLogo = 'facebook.png'
@@ -34,7 +34,7 @@ export const LoginModal = ({open, setLoginModalOpen, setMMSignature}) => {
 
     const metamaskAuthRequest = {
         domain: {
-          chainId: 1,
+          chainId: 1337,
           name: 'localhost2',
           // verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
           version: '1',
@@ -77,7 +77,7 @@ export const LoginModal = ({open, setLoginModalOpen, setMMSignature}) => {
                 <img src={facebookLogo}/>
                 Login with Facebook
                 </StyledButton> 
-                <MetaMaskAuth authRequest={metamaskAuthRequest} setSignature={setMMSignature} setLoginModalOpen={setLoginModalOpen}/>
+                <MetaMaskAuth authRequest={metamaskAuthRequest} setSubscriptionExpiration={setSubscriptionExpiration} setLoginModalOpen={setLoginModalOpen}/>
             </StyledSection>
             <footer className="modal-card-foot">
             </footer>

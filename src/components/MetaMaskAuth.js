@@ -25,7 +25,7 @@ const StyledButton = styled.button`
 function MetaMaskAuth({
   web3Provider,
   account,
-  setSignature,
+  setSubscriptionExpiration,
   authRequest,
   setLoginModalOpen,
 }) {
@@ -38,7 +38,7 @@ function MetaMaskAuth({
   const [downloadModal, setDownloadModal] = useState(false);
 
   const initialize = async () => {
-    const newProvider = web3Provider ?? await detectEthereumProvider();
+    const newProvider = web3Provider ?? (await detectEthereumProvider());
     setProvider(newProvider);
     if (newProvider) {
       const web3 = await new Web3(newProvider);
@@ -89,25 +89,36 @@ function MetaMaskAuth({
         params,
         from,
       },
-      function (err, result) {
-        const { result: signature } = result;
+      async (err, result) => {
+        const { result : signature, error } = result;
         if (err) return console.dir(err);
-        if (result.error) {
-          alert(result.error.message);
+        if (error) {
+          alert(error.message);
           closeModals();
         }
-        if (result.error) return console.error("ERROR", result);
-        setSignature(signature);
-
-        axios.post('https://web3.bluer.workers.dev/auth/register', {
-            account,
-            signature
-          }).then((res) => {
-          console.log("res", JSON.stringify(res))
-        }).catch((err) => {
-          console.log("error",  JSON.stringify(err))
-        });
-
+        if (error) return console.error("ERROR", result);
+        try {
+          await axios.post(
+            "https://web3.bluer.workers.dev/auth/register",
+            {
+              account,
+              signature,
+            }
+          );
+          const subscriptionResult = await axios.post(
+            "https://web3.bluer.workers.dev/auth/subscription",
+            {
+              account,
+            }
+          );
+          const {
+            data: { expiration },
+          } = subscriptionResult;
+          setSubscriptionExpiration(expiration || 1);
+        } catch (err) {
+          console.log("error", JSON.stringify(err));
+          setSubscriptionExpiration(1);
+        }
         closeModals();
       }
     );
