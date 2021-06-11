@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import article from "../assets/article.png";
 import axios from 'axios';
-import SubscriptionModal from '../components/SubscriptionModal'
+import {HeadlineStory} from '../content/HeadlineStory'
 import { SubscribePrompt } from '../components/SubscribePrompt'
+import {OtherStories} from '../content/OtherStories'
 import Web3 from "web3";
 import detectEthereumProvider from '@metamask/detect-provider';
 
@@ -65,65 +66,29 @@ const Content = ({ signature }) => {
     }
   }
 
-  const renderContentByAuthStatus = () => {
-    switch(currentAuthStatus){
-      case "none" : return null;
-      break;
-      case "free": return <SubscribePrompt />
-      break;
-      case "subscribed": return <div>horray you're subscribed</div>
-      break;
-      default: return null;
-      break;
-    }
-  }
+  // const renderSubscribePromptByAuthStatus = () => {
+  //   switch(currentAuthStatus){
+  //     // case "none" : return null;
+  //     // break;
+  //     case "none": return <SubscribePrompt />
+  //     break;
+  //     case "free": return <SubscribePrompt />
+  //     break;
+  //     case "subscribed": return <div>horray you're subscribed</div>
+  //     break;
+  //     default: return null;
+  //     break;
+  //   }
+  // }
 
   return (
     <>
-    {/* <SubscriptionModal subscribe={subscribe} subscribeModal={subscribeModal} toggleSubscribeModal={toggleSubscribeModal} /> */}
     <section className="hero ">
     <div className="hero-body">
       <div className="container">
-        <div className="columns">
-          <div className="column is-4 is-offset-4">
-            <div style={{margin: '10px'}}>
-            {renderContentByAuthStatus()}
-            </div>
-          </div>
-        </div>
-
-        <section className="section">
-          <div class="columns">
-            <div class="column is-three-fifths">
-              <div className="content is-medium">
-                <figure className="image is-16by9">
-                  <img src={article} alt="" />
-                </figure>
-                <h2 className="subtitle is-4">June 8, 2021</h2>
-                <h1 className="title">Lorem Ipsum</h1>
-                <p>{paywalledContent}</p>
-              </div>
-            </div>
-            <div class="column is-two-fifths">
-              <div className="content is-medium">
-                <figure className="image is-16by9">
-                  <img src={article} alt="" />
-                </figure>
-                <h2 className="subtitle is-4">June 8, 2021</h2>
-                <h1 className="title">Lorem Ipsum</h1>
-                <p>{paywalledContent}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="columns">
-            <div className="column is-8 is-offset-2">
-
-            </div>
-          </div>
-        </section>
+        <HeadlineStory />
+        <SubscribePrompt authStatus={currentAuthStatus} />
+        <OtherStories />
       </div>
     </div>
   </section>
