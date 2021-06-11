@@ -8,28 +8,26 @@ import Web3 from "web3";
 import detectEthereumProvider from '@metamask/detect-provider';
 
 
-const Content = ({ signature }) => {
-  const [paywalledContent, setPaywalledContent] = useState('Login to view full article...')
+const Content = ({ subscriptionExpiration }) => {
   const [subscribeModal, setSubscribeModal] = useState(false);
   const [welcomeModal, setWelcomeModal] = useState(false);
-  const [currentAuthStatus, setCurrentAuthStatus] = useState("none")
+  // const [currentAuthStatus, setCurrentAuthStatus] = useState("none")
 
-  useEffect(async () => {
-    if (signature) {
+  // useEffect(async () => {
+  //   if (signature) {
 
-      try {
-        const response = await axios.post('https://web3.bluer.workers.dev/api/trends', {
-          account: "temp",
-          signature: "temp"
-        })
+  //     try {
+  //       const response = await axios.post('https://web3.bluer.workers.dev/api/trends', {
+  //         account: "temp",
+  //         signature: "temp"
+  //       })
 
-        setPaywalledContent(response.data.content);
-        setCurrentAuthStatus("subscribed");
-      } catch (err) {
-        setCurrentAuthStatus("free");
-      }
-    }
-  }, [signature])
+  //       setCurrentAuthStatus("subscribed");
+  //     } catch (err) {
+  //       setCurrentAuthStatus("free");
+  //     }
+  //   }
+  // }, [signature])
 
   const toggleSubscribeModal = () => {
     if (subscribeModal) {
@@ -66,28 +64,15 @@ const Content = ({ signature }) => {
     }
   }
 
-  // const renderSubscribePromptByAuthStatus = () => {
-  //   switch(currentAuthStatus){
-  //     // case "none" : return null;
-  //     // break;
-  //     case "none": return <SubscribePrompt />
-  //     break;
-  //     case "free": return <SubscribePrompt />
-  //     break;
-  //     case "subscribed": return <div>horray you're subscribed</div>
-  //     break;
-  //     default: return null;
-  //     break;
-  //   }
-  // }
 
   return (
     <>
+    {/* <SubscriptionModal subscribe={subscribe} subscribeModal={subscribeModal} toggleSubscribeModal={toggleSubscribeModal} /> */}
     <section className="hero ">
     <div className="hero-body">
       <div className="container">
-        <HeadlineStory />
-        <SubscribePrompt authStatus={currentAuthStatus} />
+        <HeadlineStory subscriptionExpiration={subscriptionExpiration} />
+        <SubscribePrompt subscriptionExpiration={subscriptionExpiration} />
         <OtherStories />
       </div>
     </div>

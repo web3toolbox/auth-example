@@ -12,18 +12,17 @@ import {
 } from "react-router-dom";
  
 function App() {
-  const [mmSignature, setMMSignature] = useState('');
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [subcriptionModalOpen, setSubcriptionModalOpen] = useState(false);
-
+  const [subscriptionExpiration, setSubscriptionExpiration] = useState(null);
   const header = (<>
     <Navigation 
         openLoginModal={setLoginModalOpen} 
         openSubscriptionModal={setSubcriptionModalOpen} 
-        mmSignature={mmSignature} 
+        subscriptionExpiration={subscriptionExpiration} 
       />
       <SubscriptionModal open={subcriptionModalOpen} setSubcriptionModalOpen={setSubcriptionModalOpen} />
-      <LoginModal open={loginModalOpen} setLoginModalOpen={setLoginModalOpen} setMMSignature={setMMSignature}/>
+      <LoginModal open={loginModalOpen} setLoginModalOpen={setLoginModalOpen} setSubscriptionExpiration={setSubscriptionExpiration}/>
     </>);
 
   return (
@@ -31,7 +30,7 @@ function App() {
       <Route path="/" exact>
         <div className="App">
           {header}
-          <Content signature={mmSignature} />
+          <Content subscriptionExpiration={subscriptionExpiration} />
         </div>
       </Route>
       <Route path="/trends">

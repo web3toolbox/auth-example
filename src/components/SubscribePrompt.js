@@ -2,7 +2,7 @@ import { useState } from "react";
 import {SubscriptionOptionsModal} from './SubscriptionOptionsModal' 
 import styled from 'styled-components'
 
-export const SubscribePrompt = ({authStatus}) => {
+export const SubscribePrompt = ({subscriptionExpiration}) => {
   const [subscriptionOptionsModal, setSubcriptionsOptionsModal] =
     useState(false);
 
@@ -30,10 +30,12 @@ export const SubscribePrompt = ({authStatus}) => {
       width: 30px;
       transform: scaleX(-1);
     `
+
+  const subscribed = subscriptionExpiration > 1;
   return (
     <>
     <StyledSection>
-      {authStatus !== 'subscribed' ? 
+      {!subscribed ? 
       <StyledButton
       className="button"
       onClick={() => setSubcriptionsOptionsModal(true)}
@@ -42,7 +44,7 @@ export const SubscribePrompt = ({authStatus}) => {
       </StyledButton>
       : null
       }
-      <div style={{color: 'white', fontFamily:'Poppins', marginRight: '20px'}}>{authStatus !== 'subscribed' ? 'For unlimited access, subscribe with MetaMask' : "horray you're subscribed!"}</div>
+      <div style={{color: 'white', fontFamily:'Poppins', marginRight: '20px'}}>{!subscribed ? 'For unlimited access, subscribe with MetaMask' : "Horray you're subscribed!"}</div>
       <StyledImg src="https://cdn.freebiesupply.com/logos/large/2x/metamask-logo-svg-vector.svg" />
         </StyledSection>
       <SubscriptionOptionsModal
