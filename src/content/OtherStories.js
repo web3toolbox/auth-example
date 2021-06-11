@@ -46,12 +46,13 @@ const stories = [
         content: "“Ser, wen token, ser?” MetaMask team: NOW The MetaMask team has finally launched their token, and it has blown our minds. The MetaMask token enables users to accomplish something they never could before..."
     }
 ]
-export const OtherStories = () => {
+export const OtherStories = ({subscriptionExpiration}) => {
+    const subscribed = subscriptionExpiration > 1;
     return (<>
     <div style={{display: 'flex', justifyContent: 'flex-start'}}>
         <StyledP3 style={{textDecoration: 'underline', textDecorationColor:'#F66A0A', marginRight: '5px', textUnderlineOffset: '6xpx'}}>Latest</StyledP3><StyledP3>Stories</StyledP3>
     </div>
-        <StyledSection>
+        <StyledSection className={`${!subscribed && "blur"}`}>
         {stories.map(i => {
             const {image, headline, content, subtitle} = i;
             return <StoryCard image={image} headline={headline} content={content} subtitle={subtitle} />

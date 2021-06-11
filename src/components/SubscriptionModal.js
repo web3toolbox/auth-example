@@ -26,7 +26,6 @@ export const SubscriptionModal = ({open, setSubcriptionModalOpen}) => {
             const dtest = Date.now();
             const expirationDate = Date.now() + subscriptionModel[amount];
 
-            // TODO WHAT IS RESULT
             if (result.transactionHash){
                 const subscriptionResult = await axios.post(
                     "https://web3.bluer.workers.dev/auth/subscribe",
@@ -39,17 +38,14 @@ export const SubscriptionModal = ({open, setSubcriptionModalOpen}) => {
             }
             
             setSubcriptionModalOpen(false);
-            // setWelcomeModal(true);
     
         } catch (err) {
             alert("doh", err);
-            // setSubscribeModal(false);
         }
       }
 
     return (
         <>
-        {/* <StyledButton onClick={() => {Login()}}>{ isAuthenticated ? `View Account` : `Login with Metamask` }</StyledButton> */}
         <div className={`modal ${active}`}>
             <div className="modal-background"></div>
                 <div className="modal-content">
@@ -90,5 +86,3 @@ export const SubscriptionModal = ({open, setSubcriptionModalOpen}) => {
     </>
     )
 }
-
-// export default SubscriptionModal;
