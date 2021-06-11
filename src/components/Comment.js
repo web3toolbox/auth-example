@@ -28,7 +28,7 @@ export const Comment = ({ comment, author, date, origin, cid }) => {
   }, [])
 
   return (
-    <div className="card">
+    <div className="card m-2">
       <div className="card-content">
         <div className="media pb-1 mb-2">
           <div className="media-left">
@@ -49,7 +49,7 @@ export const Comment = ({ comment, author, date, origin, cid }) => {
         </div>
         <div className="content">
           <div className="pb-3">"{origin.message.comment}"</div>
-          <time>{date}</time>
+          <time>{new Date(Number(date)).toDateString()}</time>
         </div>
       </div>
     </div>

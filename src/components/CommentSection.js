@@ -5,35 +5,39 @@ import styled from 'styled-components'
 import Web3 from "web3";
 import detectEthereumProvider from "@metamask/detect-provider";
 
+const StyledComment = styled(Comment)`
+  margin: 0.6rem;
+`;
+
 const StyledSection = styled.section`
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-height: 1000px;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 1000px;
+  align-items: center;
 `
 const StyledInput = styled.textarea`
-width: 70%;
-height: 10%;
+  width: 70%;
+  height: 10%;
 `
 
 const StyledButton = styled.button`
-margin:20px;
+  margin:20px;
 `
 const StyledCommentsSection = styled.div`
-width: 100%;
-display: flex;
-flex-direction: row;
-flex-wrap: wrap;
-margin: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 50px;
 `
 
 const StyledSubSection = styled.div`
-width: 100%;
-height: 100%;
-display: flex;
-flex-direction: row;
-justify-content: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 `
 
 const IPFS = require('ipfs-mini');
@@ -44,8 +48,6 @@ export const CommentSection = () => {
     const [accounts, setAccounts] = useState([]);
     const [web3, setWeb3] = useState();
     const [provider, setProvider] = useState();
-    // const [unsignedMessage, setUnsignedMessage] = useState('');
-    const [signedMessage, setSignedMessage] = useState('');
     const [inputValue, setInputValue] = useState('');
     const [comments, setComments] = useState([]);
 
@@ -63,7 +65,7 @@ export const CommentSection = () => {
           const metadata = await axios.get(url);
           const bits = metadata.data;
 
-          const newComment = (<Comment 
+          const newComment = (<StyledComment 
             key={index} 
             comment={bits.message} 
             author={bits.account} 
@@ -156,7 +158,6 @@ export const CommentSection = () => {
               alert(result.error.message);
             }
             if (result.error) return console.error("ERROR", result);
-            setSignedMessage(signature);
             persistToIpfs(signature, from, message);
           }
         );
@@ -166,13 +167,13 @@ export const CommentSection = () => {
 
         <>
         <StyledSection>
-        <StyledCommentsSection>
-          { comments.length > 0 ? comments : (<div>Be the first to comment...</div>) }
-        </StyledCommentsSection>
-        <StyledSubSection>
-       <StyledInput className="input is-primary" type="text" placeholder="your comment..." onChange={e => {setInputValue(e.target.value)}}/>
-       <StyledButton className="button is-primary" onClick={()=> SignMessage(accounts[0])}>Submit</StyledButton>
-        </StyledSubSection>
+          <StyledCommentsSection>
+            { comments.length > 0 ? comments : (<div>Be the first to comment...</div>) }
+          </StyledCommentsSection>
+          <StyledSubSection>
+            <StyledInput className="input is-primary" type="text" placeholder="your comment..." onChange={e => {setInputValue(e.target.value)}}/>
+            <StyledButton className="button is-primary" onClick={()=> SignMessage(accounts[0])}>Submit</StyledButton>
+          </StyledSubSection>
         </StyledSection>
         </>
     )

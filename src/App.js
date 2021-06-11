@@ -48,7 +48,8 @@ function App() {
       <Route path="/comments">
         <div className="App">
           {header}
-          comments
+          <h2 className="title">Comments</h2>
+          <p>Leave your verified thoughts...</p>
           <CommentSection />
         </div>
       </Route>
