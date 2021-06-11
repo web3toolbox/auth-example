@@ -30,7 +30,6 @@ export const SubscribePrompt = ({subscriptionExpiration}) => {
       width: 30px;
       transform: scaleX(-1);
     `
-
   const subscribed = subscriptionExpiration > 1;
   return (
     <>

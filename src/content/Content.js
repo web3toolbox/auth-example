@@ -9,7 +9,11 @@ const Content = ({ subscriptionExpiration }) => {
     <section className="hero">
       <div className="container" style={{margin: '0 2.5rem'}}>
         <HeadlineStory subscriptionExpiration={subscriptionExpiration} />
-        <SubscribePrompt subscriptionExpiration={subscriptionExpiration} />
+        {
+          subscriptionExpiration ?
+          <SubscribePrompt subscriptionExpiration={subscriptionExpiration} />
+          : null
+        }
         <OtherStories subscriptionExpiration={subscriptionExpiration} />
       </div>
   </section>
