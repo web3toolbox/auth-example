@@ -44,6 +44,7 @@ export const CommentSection = () => {
     const [accounts, setAccounts] = useState([]);
     const [web3, setWeb3] = useState();
     const [provider, setProvider] = useState();
+    // const [unsignedMessage, setUnsignedMessage] = useState('');
     const [signedMessage, setSignedMessage] = useState('');
     const [inputValue, setInputValue] = useState('');
     const [comments, setComments] = useState([]);
@@ -62,15 +63,17 @@ export const CommentSection = () => {
           const metadata = await axios.get(url);
           const bits = metadata.data;
 
-          const x = (<Comment 
+          const newComment = (<Comment 
             key={index} 
             comment={bits.message} 
             author={bits.account} 
             date={bits.date}
+            origin={bits.origin}
+            cid={item}
           />)
 
           setComments((prev) => {
-            return [...prev, x];
+            return [...prev, newComment];
           });
           
         }
@@ -101,32 +104,31 @@ export const CommentSection = () => {
       }, []);
     
     const composeEIP712CompliantMessage = () => {
-        return {
-            domain: {
-              chainId: 1,
-              name: 'localhost',
-              // verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
-              version: '1',
-            },
-        
-            message: { comment: inputValue },
-            primaryType: 'Message',
-            types: {
-              EIP712Domain: [
-                { name: 'name', type: 'string' },
-                { name: 'version', type: 'string' },
-                { name: 'chainId', type: 'uint256' },
-                // { name: 'verifyingContract', type: 'address' },
-              ],
-              Message: [
-                { name: 'comment', type: 'string' },
-              ],
-            },
-          }
+      return {
+        domain: {
+          chainId: 1,
+          name: 'localhost',
+          version: '1',
+        },
+    
+        message: { comment: inputValue },
+        primaryType: 'Message',
+        types: {
+          EIP712Domain: [
+            { name: 'name', type: 'string' },
+            { name: 'version', type: 'string' },
+            { name: 'chainId', type: 'uint256' },
+          ],
+          Message: [
+            { name: 'comment', type: 'string' },
+          ],
+        },
+      }
     }
 
-    const persistToIpfs = async (message, account) => {
-      const comment = `{"message":"${message}","account":"${account}","date":"${new Date().getTime()}"}`;
+    const persistToIpfs = async (message, account, unsignedMessage) => {
+
+      const comment = `{"message":"${message}","account":"${account}","date":"${new Date().getTime()}","origin":${JSON.stringify(unsignedMessage)}}`;
       const cid = await ipfs.add(comment);
       const result = await axios.post('https://web3.bluer.workers.dev/api/comment/add', {
           cid
@@ -135,9 +137,10 @@ export const CommentSection = () => {
       return cid;
     }
 
-    const SignMessage = (account) => {
+    const SignMessage = async (account) => {
+        const message = composeEIP712CompliantMessage();
         const from = account;
-        const params = [from, JSON.stringify(composeEIP712CompliantMessage())];
+        const params = [from, JSON.stringify(message)];
         const method = "eth_signTypedData_v4";
     
         web3.currentProvider.sendAsync(
@@ -154,7 +157,7 @@ export const CommentSection = () => {
             }
             if (result.error) return console.error("ERROR", result);
             setSignedMessage(signature);
-            const cid = persistToIpfs(signature, from);
+            persistToIpfs(signature, from, message);
           }
         );
       };
